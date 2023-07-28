@@ -1,0 +1,143 @@
+/* .quill {
+  width: 8.5in;
+  justify-content: "center";
+} */
+
+/* ql-toolbar.ql-snow {
+  justify-content: center;
+} */
+.container {
+  justify-content: "center";
+}
+
+#container > .quill-toolbar.quill-snow {
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+/* #container .quill .quill-toolbar.ql-snow {
+  display: flex;
+  justify-content: center;
+} */
+
+.text-editor .ql-toolbar.ql-snow {
+  display: flex;
+  justify-content: center;
+  position: sticky;
+  top: 56px;
+  z-index: 1;
+  background-color: white;
+  border: none;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+}
+
+.text-editor .ql-container.ql-snow {
+  width: 8.5in;
+  min-height: 11in;
+  height: 10in;
+  padding: 1in;
+  margin-top: 1rem;
+  margin-left: auto;
+  margin-bottom: 1rem;
+  margin-right: auto;
+  /* margin: 1rem 0 1rem 0; */
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+  background-color: white;
+}
+
+.text-editor .ql-container.ql-snow .ql-editor {
+  height: 100%;
+  padding: 0;
+}
+
+/* @page {
+  margin: 1in;
+} */
+
+@media print {
+  body {
+    background: none;
+  }
+
+  .text-editor .ql-container.ql-snow {
+    justify-self: center;
+    width: 6.5in;
+    height: 8in;
+    padding: 0;
+    margin: 0;
+    align-self: flex-start;
+  }
+
+  .text-editor .ql-toolbar.ql-snow {
+    display: none;
+  }
+
+  .document-page-header {
+    display: none;
+  }
+}
+
+.menu-item {
+  /* background-color: black; */
+  border: none;
+  border-radius: 0.4rem;
+  color: #fff;
+  cursor: pointer;
+  height: 1.75rem;
+  margin-right: 0.25rem;
+  padding: 0.5rem;
+  width: 2rem;
+  /* width: content-fit; */
+
+  /* svg {
+    fill: currentColor;
+    height: 100%;
+    width: 100%;
+  } */
+
+  /* &: hover; */
+}
+
+.menu-item.is-active {
+  background-color: #303030;
+}
+
+.menu-item.is-active i {
+  color: white;
+}
+
+/* .editor__header {
+  margin-left: auto;
+  margin-right: auto;
+} */
+
+.menu-item .icon {
+  color: black;
+}
+
+.menu-item.is-active .icon {
+  color: white;
+}
+
+.menu-item i {
+  color: black;
+}
+
+.ProseMirror {
+  width: 8.5in;
+  min-height: 11in;
+  padding: 1in;
+  margin-top: 1rem;
+  margin-left: auto;
+  margin-bottom: 1rem;
+  margin-right: auto;
+  /* margin: 1rem 0 1rem 0; */
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+  background-color: white;
+  outline: none;
+}
