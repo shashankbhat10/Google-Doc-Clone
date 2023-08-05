@@ -106,7 +106,7 @@ app.post("/api/sendmail", async (req, res) => {
       html: `Hello,<br>
              <span> You have been invited to collaborate on the following document: <i>${documentName}</i> by ${tokenVerifyRes.name}
              <br> <br>
-             You can access the document at this <a href='${APP_URL}/document/${documentId}'>link</a>
+             You can access the document at this <a href='${process.env.APP_URL}/document/${documentId}'>link</a>
              `,
     };
 
