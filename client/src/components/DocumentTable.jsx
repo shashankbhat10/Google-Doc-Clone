@@ -1,4 +1,4 @@
-import { Typography } from "@material-tailwind/react";
+import { Button, Typography } from "@material-tailwind/react";
 import { FaTrash } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
@@ -26,7 +26,7 @@ const DocumentTable = ({ data, deleteDocument }) => {
       <tbody>
         {data.map(({ id, name, status, createdOn }, index) => {
           const isLast = index === data.length - 1;
-          const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
+          const classes = isLast ? "p-2" : "p-2 border-b border-blue-gray-50";
 
           return (
             <tr key={id} className='even:bg-blue-gray-50/50'>
@@ -48,7 +48,15 @@ const DocumentTable = ({ data, deleteDocument }) => {
                 </Typography>
               </td>
               <td className={classes} colSpan={1}>
-                <FaTrash color='red' className='text-lg' onClick={() => deleteDocument(id)} />
+                <Button
+                  size='md'
+                  variant='outlined'
+                  ripple
+                  className='md:inline-flex mx-auto px-2 py-0 h-10 border-0 focus:shadow-none justify-center items-center'
+                  // onClick={() => signOut(auth)}
+                  disabled={false}>
+                  <FaTrash color='red' className='text-lg' onClick={() => deleteDocument(id)} />
+                </Button>
               </td>
             </tr>
           );

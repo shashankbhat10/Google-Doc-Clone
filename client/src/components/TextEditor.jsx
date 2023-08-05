@@ -53,7 +53,7 @@ const formats = [
   "video",
 ];
 
-export default function TextEditor({ updateIsOwner, isDocLocked }) {
+const TextEditor = ({ updateIsOwner, isDocLocked }) => {
   const [socket, setSocket] = useState(null);
   const [quill, setQuill] = useState(null);
   const { id: documentId } = useParams();
@@ -78,7 +78,8 @@ export default function TextEditor({ updateIsOwner, isDocLocked }) {
       updateLoading(false);
     }
 
-    const s = io("http://localhost:3001");
+    // const s = io("http://localhost:8000");
+    const s = io();
     if (user) {
       getDocument();
       setSocket(s);
@@ -137,6 +138,7 @@ export default function TextEditor({ updateIsOwner, isDocLocked }) {
       const documentRef = doc(firestore, "document", documentId);
       const document = await getDoc(documentRef);
       const data = document.data();
+      console.log(data.content);
       quill.setContents(data.content);
       quill.enable();
     });
@@ -183,7 +185,7 @@ export default function TextEditor({ updateIsOwner, isDocLocked }) {
     const q = new Quill(editor, { theme: "snow", modules: modules, formats: formats });
 
     q.disable();
-    q.setText("Loading...");
+    // q.setText("Loading...");
     setQuill(q);
   }, []);
 
@@ -213,8 +215,9 @@ export default function TextEditor({ updateIsOwner, isDocLocked }) {
 
   return (
     <>
-      {loading ? (
+      {loading && quill === null ? (
         <div className='flex mt-60 items-center justify-center'>
+          {/* <Loader /> */}
           <Loader />
         </div>
       ) : (
@@ -225,4 +228,6 @@ export default function TextEditor({ updateIsOwner, isDocLocked }) {
       )}
     </>
   );
-}
+};
+
+export default TextEditor;

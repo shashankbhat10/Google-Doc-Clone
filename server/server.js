@@ -1,17 +1,33 @@
-const dotenv = require("dotenv");
 const express = require("express");
-const nodemailer = require("nodemailer");
 const cors = require("cors");
+const http = require("http");
+const socketio = require("socket.io");
+
 const { auth, firestore } = require("../firebase_server/firebase_server.js");
+
 const path = require("path");
+const dotenv = require("dotenv");
+const nodemailer = require("nodemailer");
+
 dotenv.config();
+
+/**
+ * Create express App
+ */
+
+const app = express();
+app.use(express.json());
+app.use(cors());
+
+const server = http.createServer(app);
+const io = socketio(server);
 
 /**
  * Create socket instance
  */
-const io = require("socket.io")(process.env.SOCKET_PORT, {
-  cors: { origin: "http://localhost:3000", methods: ["GET", "POST"] },
-});
+// const io = require("socket.io")(process.env.SOCKET_PORT, {
+//   cors: { origin: "http://localhost:3000", methods: ["GET", "POST"] },
+// });
 
 /**
  * Handle socket messages
@@ -33,14 +49,6 @@ io.on("connection", (socket) => {
     });
   });
 });
-
-/**
- * Create express App
- */
-
-const app = express();
-app.use(express.json());
-app.use(cors());
 
 /**
  * Create transporter instance for sending mail
@@ -117,10 +125,16 @@ app.post("/api/sendmail", async (req, res) => {
 const PORT = process.env.SERVER_PORT || 8002;
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "/client/build")));
+  const root = path.join(__dirname, "..", "client", "build");
+  // console.log(__dirname);
+  // const rootClient = path.resolve(__dirname, "..", "client", "build");
+  // app.use(express.static(path.join(__dirname, "/client/build")));
+  app.use(express.static(root));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+    // console.log(path.resolve(__dirname, "..", "client", "build", "index.html"));
+    // res.sendFile(path.resolve(__dirname, "..", "client", "build", "index.html"));
+    res.sendFile("index.html", { root });
   });
 } else {
   app.get("/api/", (req, res) => {
@@ -128,4 +142,4 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-app.listen(PORT, console.log(`API server started. Listening on port: ${PORT}`));
+server.listen(PORT, console.log(`API server started. Listening on port: ${PORT}`));

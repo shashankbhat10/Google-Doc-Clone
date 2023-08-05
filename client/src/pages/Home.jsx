@@ -3,7 +3,6 @@ import Header from "../components/Header";
 import { firestore } from "../firebase-client";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
-import { IconButton } from "@material-tailwind/react";
 import { addDoc, collection, deleteDoc, doc, getDocs, query, serverTimestamp, where } from "firebase/firestore";
 import DocumentTable from "../components/DocumentTable";
 import CreateNewDocumentModal from "../components/CreateNewDocumentModal";
@@ -29,8 +28,6 @@ const Home = () => {
   useEffect(() => {
     if (user === null) {
       navigate("/login");
-      // } else {
-      //   console.log(user);
     }
   }, [navigate, user]);
 
@@ -80,8 +77,15 @@ const Home = () => {
   }, [user]);
 
   const deleteDocument = async (id) => {
-    const documentRef = doc(firestore, "document", id);
-    await deleteDoc(documentRef);
+    try {
+      const documentRef = doc(firestore, "document", id);
+      await deleteDoc(documentRef);
+
+      let currTableData = [...tableData].filter((item) => item.id !== id);
+      updateTableData(currTableData);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -94,14 +98,6 @@ const Home = () => {
               <div className='max-w-3xl mx-auto'>
                 <div className='flex items-center justify-between py-6'>
                   <h2 className='text-gray-700 text-lg'>Start a new Document</h2>
-
-                  <IconButton
-                    color='gray'
-                    variant='outlined'
-                    ripple
-                    className='border-0 rounded-full focus:shadow-none'>
-                    <i className='fa-solid fa-ellipsis-vertical text-xl'></i>
-                  </IconButton>
                 </div>
                 <div>
                   <div className='relative h-32 w-24 md:h-48 md:w-36 border-2 cursor-pointer hover:border-blue-700'>

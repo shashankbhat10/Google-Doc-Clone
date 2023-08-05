@@ -1,13 +1,14 @@
 import { firestore, auth } from "../firebase-client";
 import { Button, IconButton, Input, Popover, PopoverContent, PopoverHandler, Tooltip } from "@material-tailwind/react";
 import { arrayUnion, doc, getDoc, updateDoc } from "firebase/firestore";
-import { Fragment, useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 import { signOut } from "firebase/auth";
 import { RiLock2Line, RiShareFill } from "react-icons/ri";
 import { useNavigate, useParams } from "react-router-dom";
 // import { Popover, Transition } from "@headlessui/react";
 import axios from "axios";
+import { FaFileLines } from "react-icons/fa6";
 // import { Button,  } from "@material-tailwind/react";
 
 function DocumentHeader({ isDocLocked, isOwner, updateIsDocLocked, documentLockHandler }) {
@@ -56,22 +57,26 @@ function DocumentHeader({ isDocLocked, isOwner, updateIsDocLocked, documentLockH
       documentName: newDocumentName,
       documentId: documentId,
     };
-    const res = await axios.post("http://localhost:8000/sendmail", emailData);
+    // const res = await axios.post("http://localhost:8000/sendmail", emailData);
+    await axios.post("http://localhost:8000/sendmail", emailData);
 
     updateEmailToShare("");
   };
 
   return (
     <header className='sticky top-0 z-50 flex justify-between items-center px-4 pt-2 shadow-md bg-white document-page-header'>
-      <IconButton
+      {/* <IconButton */}
+      <Button
         color='blue'
         size='md'
         variant='outlined'
         ripple
         onClick={() => navigate("/home")}
-        className='md:inline-flex ml-2 mr-3 h-20 w-20 border-0 mb-2 focus:shadow-none'>
-        <i className='fa-solid fa-file-lines text-2xl'></i>
-      </IconButton>
+        className='md:inline-flex ml-2 mr-3 w-fit px-2 border-0 py-0 items-center mb-2 focus:shadow-none'>
+        {/* <i className='fa-solid fa-file-lines text-2xl'></i> */}
+        <FaFileLines className='text-2xl' />
+      </Button>
+      {/* </IconButton> */}
       <div>
         <input
           type='text'
