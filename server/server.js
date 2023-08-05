@@ -78,6 +78,7 @@ app.get("/api/", (req, res) => {
  */
 app.post("/api/sendmail", async (req, res) => {
   const { token, emailTo, documentName, documentId } = req.body;
+  console.log(emailTo);
 
   try {
     const tokenVerifyRes = await auth.verifyIdToken(token);
@@ -92,6 +93,7 @@ app.post("/api/sendmail", async (req, res) => {
       return res.status(400).send({ message: "User is not allowed to add/remove users" });
     }
 
+    console.log(data.allowed);
     if (data.allowed.includes(emailTo)) {
       return res.status(400).send({ message: "Target user already has access to the document" });
     }
@@ -104,7 +106,7 @@ app.post("/api/sendmail", async (req, res) => {
       html: `Hello,<br>
              <span> You have been invited to collaborate on the following document: <i>${documentName}</i> by ${tokenVerifyRes.name}
              <br> <br>
-             You can access the document at this <a href='http://localhost:3000/document/${documentId}'>link</a>
+             You can access the document at this <a href='${APP_URL}/document/${documentId}'>link</a>
              `,
     };
 
