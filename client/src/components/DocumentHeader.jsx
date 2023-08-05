@@ -58,7 +58,7 @@ function DocumentHeader({ isDocLocked, isOwner, updateIsDocLocked, documentLockH
       documentId: documentId,
     };
     // const res = await axios.post("http://localhost:8000/sendmail", emailData);
-    const BASE_URL = process.env.BASE_API_URL;
+    const BASE_URL = process.env.REACT_APP_BASE_API_URL;
     // await axios.post("http://localhost:8000/api/sendmail", emailData);
     await axios.post(`${BASE_URL}/api/sendmail`, emailData);
 
