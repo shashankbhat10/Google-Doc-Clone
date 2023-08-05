@@ -48,8 +48,6 @@ function DocumentHeader({ isDocLocked, isOwner, updateIsDocLocked, documentLockH
 
   const addEmailToAllowedList = async (event) => {
     const token = await auth.currentUser.getIdToken();
-    const documentRef = doc(firestore, "document", documentId);
-    await updateDoc(documentRef, { allowed: arrayUnion(emailToShare) });
 
     const emailData = {
       token: token,
@@ -59,10 +57,11 @@ function DocumentHeader({ isDocLocked, isOwner, updateIsDocLocked, documentLockH
     };
     // const res = await axios.post("http://localhost:8000/sendmail", emailData);
     const BASE_URL = process.env.REACT_APP_BASE_API_URL;
-    // await axios.post("http://localhost:8000/api/sendmail", emailData);
     await axios.post(`${BASE_URL}/api/sendmail`, emailData);
-
     updateEmailToShare("");
+
+    const documentRef = doc(firestore, "document", documentId);
+    await updateDoc(documentRef, { allowed: arrayUnion(emailToShare) });
   };
 
   return (
